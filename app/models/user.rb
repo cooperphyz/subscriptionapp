@@ -9,4 +9,8 @@ class User < ApplicationRecord
 
   has_many :notifications, as: :recipient, dependent: :destroy
   has_many :services
+
+  def subscribed?
+    false
+  end
 end
