@@ -5,7 +5,7 @@ class SubscriptionsController < ApplicationController
   def new
     
   end
-
+ 
   def create
     current_user.update_card(params[:payment_method_id]) if params[:payment_method_id].present?
     current_user.subscribe(@plan.stripe_id)

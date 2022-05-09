@@ -18,6 +18,9 @@
     <thead>
       <tr>
         <th>Title</th>
+        <% if current_user.subscribed? %>
+            <th>Title</th>
+        <% end %>
       </tr>
     </thead>
 
@@ -25,6 +28,9 @@
       <% @movies.each do |movie| %>
         <%= content_tag :tr, id: dom_id(movie), class: dom_class(movie) do %>
             <td><%= link_to movie.title, movie %></td>
+            <% if current_user.subscribed? %>
+            <td><%= link_to movie.video_url, movie %></td>
+        <% end %>
         <% end %>
       <% end %>
     </tbody>

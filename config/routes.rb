@@ -22,6 +22,7 @@ end
 
   resource :pricing, controller: :pricing
   resource :subscription
+  resources :payments
 
   root to: 'home#index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

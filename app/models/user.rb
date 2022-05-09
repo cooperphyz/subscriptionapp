@@ -13,7 +13,11 @@ class User < ApplicationRecord
   has_many :charges
 
   def subscribed?
-    false
+    subscription && subscription.active?
+  end
+
+  def subscription
+    subscriptions.last
   end
 
   def subscribe(plan, options={})
@@ -30,7 +34,7 @@ class User < ApplicationRecord
 
     sub = Stripe::Subscription.create(args)
 
-    subscription = subscription.create(
+    subscription = Subscription.create(
         stripe_id: sub.id,
         stripe_plan: plan,
         status: sub.status,
@@ -52,10 +56,10 @@ class User < ApplicationRecord
     Stripe::Customer.update(stripe_id, invoice_settings: {default_payment_method: payment_method.id})
 
     update(
-        card_brand: payment_method.card.brand.titleize
-        card_last4: payment_method.card.last4
-        card_exp_month: payment_method.card.exp_month
-        card_exp_year: payment_method.card.exp_year
+        card_brand: payment_method.card.brand.titleize,
+        card_last4: payment_method.card.last4,
+        card_exp_month: payment_method.card.exp_month,
+        card_exp_year: payment_method.card.exp_year,
     )
   end
 
